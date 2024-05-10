@@ -45,3 +45,16 @@ python manage.py createsuperuser
 ```shell
 python manage.py runserver
 ```
+## Руководство по Rest API
+### id  - целое число, передаваемое на прямую
+- ### GET api/change_naeb/id - Для инвертирования статуса проекта, с переданным id 
+- ### POST /api/is_naeb/id - Для создания проекта, по пераданным значениям
+Пример входного JSON:
+```json
+{
+    "name": "Название проекта",
+    "is_naeb": false
+}
+```
+- ### GET /api/is_naeb/id - Возврат статуса нужного проекта
+- ### GET /api/all_projects/ - Для возврата всех проектов, и их статусов

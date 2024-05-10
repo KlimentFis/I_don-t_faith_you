@@ -7,12 +7,12 @@
 
 Клонирование проекта:
 ```shell
-git clone https://github.com/KlimentFis/Our_Diploma 
+git clone https://github.com/KlimentFis/I_don-t_faith_you 
 ```
 
 Переход в папку проекта:
 ```shell
-cd Our_Diploma/Сайт_для_изучения_иностранных_языков
+cd I_don-t_faith_you
 ```
 
 Установка и активация виртуального окружения ( Не обязательно ):

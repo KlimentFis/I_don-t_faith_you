@@ -45,6 +45,10 @@ python manage.py createsuperuser
 ```shell
 python manage.py runserver
 ```
+Для использования по прямому назначению:
+```shell
+python manage.py runserver 0.0.0.0:8888
+```
 ## Руководство по Rest API
 ### id  - целое число, передаваемое на прямую
 - ### GET api/change_naeb/id - Для инвертирования статуса проекта, с переданным id 

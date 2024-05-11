@@ -67,3 +67,75 @@ python manage.py runserver 0.0.0.0:8888
 ```
 - ### GET /api/is_naeb/id - Возврат статуса нужного проекта
 - ### GET /api/all_projects/ - Для возврата всех проектов, и их статусов
+
+## Пример использования
+```
+protected override void OnCreate(Bundle savedInstanceState)
+{
+  base.OnCreate(savedInstanceState);
+  CheckIsNaebAsync();
+}
+
+private async Task CheckIsNaebAsync()
+{
+  string apiUrl = "http://192.168.1.16:8888/api/is_naeb/2";
+  bool isNaeb = false;
+
+  using (HttpClient client = new HttpClient())
+  {
+    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+    if (response.IsSuccessStatusCode)
+    {
+      string responseContent = await response.Content.ReadAsStringAsync();
+      var responseObject = JsonConvert.DeserializeObject<dynamic>(responseContent);
+
+      // Проверка наличия поля "is_naeb" в ответе
+      if (responseObject.ContainsKey("is_naeb"))
+      {
+      	isNaeb = (bool)responseObject["is_naeb"];
+      }
+      else
+      {
+        // Если поле "is_naeb" отсутствует в ответе
+        ShowAlert("Ошибка", "Поле 'is_naeb' не найдено в ответе");
+        return;
+      }
+    }
+ 	else
+    {
+      // Вывод сообщения об ошибке в случае неудачного запроса
+      ShowAlert("Ошибка", $"Ошибка при выполнении запроса: {response.StatusCode}");
+      return;
+    }
+  }
+
+  if (!isNaeb)
+  {
+    Xamarin.Essentials.Platform.Init((Activity)Android.App.Application.Context, null);
+    Forms.Init(this, null);
+    LoadApplication(new App());
+  }
+  else
+  {
+  	ShowAlert("Техническая ошибка", "Запуск приложения заблокирован. Разработчики тоже хотят кушать!!! 🥺🥺🥺");
+  }
+}
+
+private void ShowAlert(string title, string message)
+{
+  AlertDialog.Builder builder = new AlertDialog.Builder(this);
+  builder.SetTitle(title);
+  builder.SetMessage(message);
+  builder.SetPositiveButton("OK", (senderAlert, args) => { });
+
+  Dialog dialog = builder.Create();
+  dialog.Show();
+}
+
+public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+{
+  Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+  base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+}
+```

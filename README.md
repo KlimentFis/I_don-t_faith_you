@@ -139,3 +139,6 @@ public override void OnRequestPermissionsResult(int requestCode, string[] permis
   base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 }
 ```
+
+# Результат
+![](./result.jpg)

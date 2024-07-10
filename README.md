@@ -38,11 +38,6 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-Создание Супер-пользователя ( Не обязательно ):
-```shell
-python manage.py createsuperuser
-```
-
 ## Запуск проекта
 Для локальной разработки:
 ```shell

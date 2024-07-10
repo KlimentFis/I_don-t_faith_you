@@ -19,6 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+import secrets
+JWT_SECRET_KEY = secrets.token_urlsafe(32)
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-zmx^6mqm7f-e9)(f=r0t+f$fw*36&yy%(=+hi^zcdb^(4gbev8'
 
@@ -38,7 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'api'
+    'rest_framework',
+    'rest_framework_jwt',
+    'rest_framework_swagger',
+    'rest_framework.authtoken',
+    'corsheaders',
+    'drf_yasg',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -101,6 +110,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'JWT_AUTH': {
+        'JWT_SECRET_KEY': JWT_SECRET_KEY,
+        'JWT_ALLOW_REFRESH': True,  # Allow token refresh
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

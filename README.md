@@ -25,7 +25,7 @@ python -m venv venv && venv\Scripts\activate.bat
 
 Установка зависимостей:
 ```shell
-pip install -r requirements.txt
+pip install -r req.txt
 ```
 
 Создание миграций:
